@@ -76,6 +76,9 @@ public class TicketService {
 
     public boolean modifySeat(int ticketId, String sectionName, int seatNo) throws Exception {
         Ticket ticket = ticketRepo.getTicketById(ticketId);
+        if(ticket == null){
+            throw new Exception("Ticket does not exist. Invalid input");
+        }
         Train train = trainRepo.find(ticket.getTrain().getFrom(), ticket.getTrain().getTo());
         for(Section section: train.getSections()){
             if(section.getSectionName().equals(sectionName)){
